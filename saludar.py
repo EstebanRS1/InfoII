@@ -4,4 +4,3 @@ def saludar():
 saludar()
 
 print("Ver historial y volver a la anterior")
-
