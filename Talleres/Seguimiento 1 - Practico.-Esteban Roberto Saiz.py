@@ -147,14 +147,22 @@ class Sistema():
             self.__listaAnimales[animal.verId()] = animal
             return True
         
-    def verFechaIngreso(self,animal):
+    def verFechaIngreso(self,id):
         #busco la mascota y devuelvo el atributo solicitado
-        if animal in self.__listaAnimales:
-            return self.__listaAnimales[animal].verId()
+        if id in self.__listaAnimales:
+            return self.__listaAnimales[id].verId()
         return None
     
-    def verAnimales(self):
-        return self.__listaAnimales
+    def verAnimales(self, id):
+        for id, animal in self.__listaAnimales.items():
+            print(f"ID: {id}")
+            print(f"Tipo de animal: {type(animal).__name__}")
+            print(f"Nombre: {id.verNombre()}" if isinstance(id, Bovino) else "")
+            print(f"Sexo: {id.verSexo()}")
+            print(f"Edad: {id.verEdad()}" if isinstance(id, Bovino) else "")
+            print(f"Habitat: {id.verHabitat()}")
+            print(f"Fecha de ingreso: {id.verFechaI()}")
+            print()
 
     def eliminarAnimal(self, id):
         if id in self.__listaAnimales:
@@ -245,14 +253,9 @@ while True:
 
     elif menu==3:
         q = int(input("Ingrese el ID de la mascota: "))
-        ann=mi_sistema.verAnimales()
+        ann=mi_sistema.verAnimales(q)
         print(ann)
-        fecha = mi_sistema.verFechaIngreso(q)
-        if fecha != None:  
-            print("La fecha de ingreso de la mascota es: " + fecha)
-        else:
-            print("La historia clínica ingresada no corresponde con ninguna mascota en el sistema.")
-
+       
 
 
     elif menu==4:
