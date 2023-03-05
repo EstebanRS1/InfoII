@@ -1,3 +1,4 @@
+import datetime
 class Animales:
     def __init__(self):
         self.__id=0
@@ -80,7 +81,7 @@ class Cabras(Animales):
 class Pollos(Animales):
     def __init__(self):
         super().__init__()  # llama al constructor de la clase padre
-        self.__fechaE=""
+        self.__fechaE=datetime.datetime.now().strftime("%x")
         self.__alimento=""
         self.__color=""
 
@@ -103,9 +104,9 @@ class Pollos(Animales):
 class Otros(Animales):
     def __init__(self):
         super().__init__()  # llama al constructor de la clase padre
-        self.__fechaI=""
+        self.__fechaI=datetime.datetime.now().strftime("%x")
         self.__motivo=""
-        self.__fecharetiro=0
+        self.__fecharetiro=datetime.datetime.now().strftime("%x")
 
     #Setters
     def asignarFechaI(self,fechaI):
@@ -125,7 +126,7 @@ class Otros(Animales):
 
 class Sistema():
     def __init__(self):
-        self.__listaAnimales={}
+        self.__listaAnimales={}#[id]=animal 
         # self.__lista_bovino=[]
         # self.__lista_cabras=[]
         # self.__lista_pollos=[]
@@ -153,22 +154,43 @@ class Sistema():
             return self.__listaAnimales[id].verId()
         return None
     
-    def verAnimales(self, id):
-        for id, animal in self.__listaAnimales.items():
-            print(f"ID: {id}")
-            print(f"Tipo de animal: {type(animal).__name__}")
-            print(f"Nombre: {id.verNombre()}" if isinstance(id, Bovino) else "")
-            print(f"Sexo: {id.verSexo()}")
-            print(f"Edad: {id.verEdad()}" if isinstance(id, Bovino) else "")
-            print(f"Habitat: {id.verHabitat()}")
-            print(f"Fecha de ingreso: {id.verFechaI()}")
-            print()
+    def verAn(self,c):
+        return self.__listaAnimales[c]
+    
+    # def verAnimales(self, id):
+    #     for id, animal in self.__listaAnimales.items():
+    #         print(f"ID: {id}")
+    #         print(f"Tipo de animal: {type(animal).__name__}")
+    #         print(f"Nombre: {id.verNombre()}" if isinstance(id, Bovino) else "")
+    #         print(f"Sexo: {id.verSexo()}")
+    #         print(f"Edad: {id.verEdad()}" if isinstance(id, Bovino) else "")
+    #         print(f"Habitat: {id.verHabitat()}")
+    #         print(f"Fecha de ingreso: {id.verFechaI()}")
+    #         print()
 
     def eliminarAnimal(self, id):
         if id in self.__listaAnimales:
             del self.__listaAnimales[id]
             return True #eliminado con exito
         return False
+
+def validar(msj):
+    while True:
+        try:
+            valor = int(input(msj))
+            break
+        except ValueError:
+            print("Error!, Ingrese un dato numérico...")
+    return valor
+
+def validarf(cc):
+    while True:
+        try:
+            valor=float(input(cc))
+            break
+        except ValueError:
+            print("Error, ingrese un valor valido")
+    return valor
 
 
 mi_sistema = Sistema()
@@ -183,7 +205,7 @@ while True:
 
     if menu == 1:
         
-        id = int(input(" Ingrese el identificador del Animal: "))
+        id = validar(" Ingrese el identificador del Animal: ")
         if mi_sistema.verificarExiste(id) == False:
             corral=input("Ingrese el corral de confinamiento (Número de fila y columna): ")
             habitat=input("Ingrese la Naturaleza de habitat (Terrestre, Acuático, Híbrido).: ").upper()
