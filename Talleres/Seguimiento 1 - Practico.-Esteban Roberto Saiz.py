@@ -151,22 +151,15 @@ class Sistema():
     def verFechaIngreso(self,id):
         #busco la mascota y devuelvo el atributo solicitado
         if id in self.__listaAnimales:
-            return self.__listaAnimales[id].verId()
+            return self.__listaAnimales[id].verFechaI()
         return None
     
     def verAn(self,c):
         return self.__listaAnimales[c]
     
-    # def verAnimales(self, id):
-    #     for id, animal in self.__listaAnimales.items():
-    #         print(f"ID: {id}")
-    #         print(f"Tipo de animal: {type(animal).__name__}")
-    #         print(f"Nombre: {id.verNombre()}" if isinstance(id, Bovino) else "")
-    #         print(f"Sexo: {id.verSexo()}")
-    #         print(f"Edad: {id.verEdad()}" if isinstance(id, Bovino) else "")
-    #         print(f"Habitat: {id.verHabitat()}")
-    #         print(f"Fecha de ingreso: {id.verFechaI()}")
-    #         print()
+    def verListadoAnimales(self):
+        return self.__listaAnimales
+    
 
     def eliminarAnimal(self, id):
         if id in self.__listaAnimales:
@@ -174,6 +167,7 @@ class Sistema():
             return True #eliminado con exito
         return False
 
+#Validaciones
 def validar(msj):
     while True:
         try:
@@ -193,15 +187,16 @@ def validarf(cc):
     return valor
 
 
+#Menu
 mi_sistema = Sistema()
 while True:
-    menu=int(input('''\nIngrese una opción: 
+    menu=validar('''\nIngrese una opción: 
                     \n1- Ingresar un Animal
                     \n2- Ver número de Animales en el servicio 
                     \n3- Ver Animal por ID
                     \n4- Eliminar Animal 
                     \n5- Salir 
-                    \nUsted ingresó la opción: ''' ))
+                    \nUsted ingresó la opción: ''' )
 
     if menu == 1:
         
@@ -210,7 +205,7 @@ while True:
             corral=input("Ingrese el corral de confinamiento (Número de fila y columna): ")
             habitat=input("Ingrese la Naturaleza de habitat (Terrestre, Acuático, Híbrido).: ").upper()
             peligro=input("¿Es una especie que representa peligro? (Sí/No): ").upper()
-            tipo=input("Ingrese el tipo de animal (Bovino, Cabra, Pollo, Otro): ").upper()
+            tipo=validar("\nIngrese el tipo de animal \n1.Bovino. \n2.Cabra. \n3.Pollo \n4.Otro \n: ")
             
             mas = Animales()
             mas.asignarCorral(corral)
@@ -221,9 +216,9 @@ while True:
             
             masB=Bovino()
             masC=Cabras()
-            if tipo == "BOVINO":
+            if tipo == 1:
                 nombre=input("Ingrese el nombre del animal: ")
-                edad=int(input("Ingrese la edad del animal: "))
+                edad=validar("Ingrese la edad del animal: ")
                 sexo=input("Ingrese el sexo del animal(Macho o Hembra): ").upper()
                 temperamento=input("Ingrese el temperamento del animal(Agresivo o Calmado): ").upper()
                 masB.asignarNombre(nombre)
@@ -233,7 +228,7 @@ while True:
                 mi_sistema.ingresarAnimal(masB)
                 print("Mascota ingresada con exito")
 
-            elif tipo == "CABRA":
+            elif tipo == 2:
                 sexo=input("Ingrese el sexo del animal(Macho o Hembra): ").upper()
                 estudio=input("¿Se encuentra bajo estudio? (Sí/No): ").upper()
                 masC.asignarSexo(sexo)
@@ -241,7 +236,7 @@ while True:
                 mi_sistema.ingresarAnimal(masC)
                 print("Mascota ingresada con exito")
             
-            elif tipo == "POLLO":
+            elif tipo == 3:
                 fechaE=input("Ingrese la fecha de ingreso del animal: ")
                 alimento=input("Ingrese el alimento que se le está suministrando: ")
                 color=input("Ingrese el color del animal: ")
@@ -252,7 +247,7 @@ while True:
                 mi_sistema.ingresarAnimal(masP)
                 print("Mascota ingresada con exito")
             
-            elif tipo == "OTRO":
+            elif tipo == 4:
                 fechaI=input("Ingrese la fecha de ingreso del animal: ")
                 motivo=input("Ingrese el motivo de ingreso del animal: ")
                 fecharetiro=input("Ingrese la fecha de retiro del animal: ")
@@ -262,31 +257,40 @@ while True:
                 masO.asignarFechaRetiro(fecharetiro)
                 mi_sistema.ingresarAnimal(masO)
                 print("Mascota ingresada con exito")
+            
+            else:
+                print("Opción no válida, intente nuevamente")
 
 
         else:
-            print("Ya existe un Animal con el numero de ID ingresado.") 
+            print(f"Ya existe un Animal con el numero de ID {id}. Intente nuevamente") 
 
 
     elif menu==2:
-        print(mi_sistema.verAnimales())
+        #print(mi_sistema.verAnimales())
+        # Idd1= validar(" Ingrese el identificador del Animal: ")
+        # if mi_sistema.verificarExiste(Idd1):
+        #     p = mi_sistema.verAn(Idd1)
+        cv =len(mi_sistema.verListadoAnimales())
+        print(cv)
+        #     print(f"El Animal {p.verId()} tiene {cv} visitas")
+        # else:
+        #     print("El Animal no existe en el sistema, intente nuevamente")
         # numero=mi_sistema.verNumeroAnimales()
         # print("El número de Animales en el sistema es: " + str(numero))
 
     elif menu==3:
-        q = int(input("Ingrese el ID de la mascota: "))
-        ann=mi_sistema.verAnimales(q)
+        q = validar("Ingrese el ID de la mascota: ")
+        ann=mi_sistema.verListadoAnimales()
         print(ann)
-       
-
-
+        
     elif menu==4:
-        q = int(input("Ingrese el ID del Animal: "))
+        q = validar("Ingrese el ID del Animal: ")
         resultado_operacion = mi_sistema.eliminarAnimal(q) 
         if resultado_operacion == True:
             print("Animal eliminado del sistema con exito")
         else:
-            print("No se ha podido eliminar el Animal")
+            print("No se ha podido eliminar el Animal, intente nuevamente")
 
     elif menu==5:
         print("Usted ha salido del sistema de servicio del laboratorio")
@@ -294,13 +298,3 @@ while True:
 
     else:
         print("Usted ingresó una opción no válida, intentelo nuevamente...")
-
- 
-    # elif menu == 2:
-    #     print("Número total de pacientes: " + str(mi_sistema.verNumeroPacientes()))
-    # elif menu == 3:
-    #     mi_sistema.verDatosPacientes()
-    # elif menu == 4:
-    #     break
-    # else: 
-    #     print("Opción inválida")
