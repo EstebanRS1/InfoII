@@ -27,6 +27,12 @@ class Animales:
         return self.__habitat
     def verPeligro(self):  
         return self.__peligro
+    
+    def mostrar_info(self):
+        print(f"Id: {self.__id}")
+        print(f"Corral: {self.__corral}")
+        print(f"Habitat: {self.__habitat}")
+        print(f"Esta en Peligro:: {self.__peligro}")
 
 
 class Bovino(Animales):
@@ -58,6 +64,13 @@ class Bovino(Animales):
         return self.__edad
     def verTemperamento(self):
         return self.__temperamento
+    
+    def mostrar_info(self):
+        super().mostrar_info()
+        print(f"Nombre: {self.__nombre}")
+        print(f"Sexo: {self.__sexo}")
+        print(f"Edad: {self.__edad}")
+        print(f"Temperamento: {self.__temperamento}")
 
 class Cabras(Animales):
 
@@ -77,6 +90,11 @@ class Cabras(Animales):
         return self.__sexo
     def verEstudio(self):
         return self.__estudio
+
+    def mostrar_info(self):
+        super().mostrar_info()
+        print(f"Sexo: {self.__sexo}")
+        print(f"Estudio: {self.__estudio}")
 
 class Pollos(Animales):
     def __init__(self):
@@ -100,6 +118,12 @@ class Pollos(Animales):
         return self.__alimento
     def verColor(self):
         return self.__color
+    
+    def mostrar_info(self):
+        super().mostrar_info()
+        print(f"Fecha de Entrada: {self.__fechaE}")
+        print(f"Alimento: {self.__alimento}")
+        print(f"Color: {self.__color}")
 
 class Otros(Animales):
     def __init__(self):
@@ -123,6 +147,12 @@ class Otros(Animales):
         return self.__motivo
     def verFechaRetiro(self):
         return self.__fecharetiro
+    
+    def mostrar_info(self):
+        super().mostrar_info()
+        print(f"Fecha de Ingreso: {self.__fechaI}")
+        print(f"Motivo: {self.__motivo}")
+        print(f"Fecha de Retiro: {self.__fecharetiro}")
 
 class Sistema():
     def __init__(self):
@@ -166,6 +196,10 @@ class Sistema():
             del self.__listaAnimales[id]
             return True #eliminado con exito
         return False
+    
+    def display_registry(self,id):
+        for id, animal in self.__listaAnimales.items():
+            print(f"{id}: {animal}")
 
 #Validaciones
 def validar(msj):
@@ -280,10 +314,21 @@ while True:
         # print("El número de Animales en el sistema es: " + str(numero))
 
     elif menu==3:
-        q = validar("Ingrese el ID de la mascota: ")
-        ann=mi_sistema.verListadoAnimales()
-        print(ann)
-        
+        # q = validar("Ingrese el ID de la mascota: ")
+        # if mi_sistema.verificarExiste(q):
+            # # if q in mi_sistema.__listaAnimales.items():
+            # animal_buscado = mi_sistema.verAn(q)
+            # print("Información del Animal:")
+            # animal_buscado.mostrar_info()
+
+            # # Mostrar información de todos los estudiantes en el diccionario
+            # for iddd, Animal in mi_sistema.__listaAnimales.items():
+            #     print(f"Información del Animal con ID {iddd}:")
+            #     Animal.mostrar_info()
+        for id, animal in mi_sistema.verListaAnimales().items():
+            mi_sistema.mostrar_info()
+            print("------------------------")
+       
     elif menu==4:
         q = validar("Ingrese el ID del Animal: ")
         resultado_operacion = mi_sistema.eliminarAnimal(q) 
